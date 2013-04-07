@@ -148,7 +148,10 @@ def print_message(msg, debug_only=True, call_level=1, error=False):
         # Grab the callee function's name and prepend to the outgoing message.
         callee_stack_frame = inspect.stack()[call_level]
         callee_module = inspect.getmodule(callee_stack_frame[0])
-        callee_module_name = strip_line(callee_module.__name__)
+        if callee_module is not None:
+          callee_module_name = strip_line(callee_module.__name__)
+        else:
+          callee_module_name = ''
         callee_src_line = '(' + \
             color(LINE_COLOR, repr(callee_stack_frame[2]).rjust(4)) + \
             ')'
